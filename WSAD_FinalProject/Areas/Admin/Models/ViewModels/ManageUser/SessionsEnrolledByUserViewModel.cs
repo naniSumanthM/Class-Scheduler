@@ -1,4 +1,5 @@
-﻿using WSAD_FinalProject.Models.ViewModels.Session;
+﻿using WSAD_FinalProject.Models.ViewModels.Account;
+using WSAD_FinalProject.Models.ViewModels.Session;
 
 namespace WSAD_FinalProject.Areas.Admin.Models.ViewModels.ManageUser
 {
@@ -22,6 +23,5 @@ namespace WSAD_FinalProject.Areas.Admin.Models.ViewModels.ManageUser
         public int SessionId { get; set; }    
         public SessionViewModel Session { get; set; }  
         public bool isSelected { get; set; }
-
     }
 }

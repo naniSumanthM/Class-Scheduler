@@ -265,6 +265,11 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// When a valid userID, the view will return all the sessions the user is currently enrolled in 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult GetEnrolledUsers(int? id = null)
         {
@@ -307,6 +312,11 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
             return View(enrollmentList);
         }
 
+        /// <summary>
+        /// When Supplied with a list of users to delete, this action result will remove their respective sessioncartID's from the database
+        /// </summary>
+        /// <param name="collectionOfUsersToDeleteFromSession"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult DeleteUsersFromSession(List<UsersEnrolledBySessionViewModel> collectionOfUsersToDeleteFromSession)
         {
@@ -338,6 +348,13 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sessionId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpPost]
         public ActionResult AddUserToSession(int sessionId, int userId)
         {
             bool userAdded = false;

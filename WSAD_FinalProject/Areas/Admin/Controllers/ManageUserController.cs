@@ -289,5 +289,6 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
             }
             return View(enrollmentList);
         }
+
     }
 }
