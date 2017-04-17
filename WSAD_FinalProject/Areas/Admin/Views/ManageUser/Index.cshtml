@@ -1,0 +1,86 @@
+﻿@model List<WSAD_FinalProject.Areas.Admin.Models.ViewModels.ManageUser.ManageUserViewModel>
+
+@section Scripts
+{
+    <script src="@Url.Content("~/Scripts/script.js")"></script>
+}
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Manage Users</h2>
+
+@using (Html.BeginForm("DeleteUser", "ManageUser"))
+{
+    <table class="table">
+        <tr>
+            <th>
+                Select
+            </th>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Email Address
+            </th>
+            <th>
+                Company
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var item = Model[i];
+            <tr>
+                <td>
+                    @Html.HiddenFor(x => Model[i].UserId)
+                    @Html.CheckBoxFor(x => Model[i].isSelected)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserFirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserLastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserEmailAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserCompany)
+                </td>
+                <td>
+                    @if (item.UserIsAdmin)
+                    {
+                        <b>Administrator</b>
+                    }
+                    else
+                    {
+                        <b>User</b>
+                    }
+
+                </td>
+                <td>
+                    @Html.ActionLink("Edit User", "EditUser", new { id = item.UserId }) |
+                    @Html.ActionLink("User Profile", "UserProfile", new { id = item.UserId }) |
+                    @Html.ActionLink("View Sessions Enrolled", "GetEnrolledSessions",  new { id = item.UserId })
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div>
+        <button type="submit" class="btn btn-default">@Html.ActionLink("Add User", "AddUser", "ManageUser")</button>
+        <button type="submit" id="postBack" class="btn btn-danger">Delete Users</button>
+    </div>
+}

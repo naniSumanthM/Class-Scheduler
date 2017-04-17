@@ -1,0 +1,69 @@
+﻿@model List<WSAD_FinalProject.Models.ViewModels.SessionCart.SessionCartViewModel>
+
+@section Scripts
+{
+    <script src="@Url.Content("~/Scripts/script.js")"></script>
+}
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Session Cart</h2>
+
+@if (@Model.Count == 0)
+{
+    <h3>Your Cart is EMPTY</h3>
+    <button type="submit" class="btn btn-default">@Html.ActionLink("Register For Sessions", "Index", "Session")</button>
+}
+
+else
+{
+    using (Html.BeginForm("Delete", "SessionCart"))
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    Select
+                </th>
+                <th>
+                    Session Title
+                </th>
+                <th>
+                    Session Presenter
+                </th>
+                <th>
+                    Session Description
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var item = Model[i];
+                <tr>
+                    <td>
+                        @Html.HiddenFor(x => Model[i].SessionCartId)
+                        @Html.CheckBoxFor(x => Model[i].isSelected)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Session.SessionTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Session.SessionPresenter)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Session.SessionDescription)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "SessionProfile", "SessionCart", new { id = item.SessionId }, null)
+                    </td>
+                </tr>
+            }
+        </table>
+        <button id="postBack" type="submit" class="btn btn-danger">Remove From Cart</button>
+        <button type="submit" class="btn btn-default">@Html.ActionLink("Register For Sessions", "Index", "Session")</button>
+    }
+}

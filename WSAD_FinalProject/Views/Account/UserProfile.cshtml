@@ -1,0 +1,62 @@
+﻿@model WSAD_FinalProject.Models.ViewModels.Account.UserProfileViewModel
+
+@{
+    ViewBag.Title = "UserProfile";
+}
+
+<h2>My User Profile</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.LabelFor(model => model.UserFirstName, "First Name")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserFirstName)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.UserLastName, "Last Name")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserLastName)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.UserEmailAddress, "Email Address")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserEmailAddress)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.UserCompany, "Company")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserCompany)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.UserIsAdmin, "Administrator")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserIsAdmin)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.UserDateCreated, "Date Created")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserDateCreated)
+        </dd>
+
+    </dl>
+</div>
+<button type="button" name="Edit" class="btn btn-default">@Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) </button>

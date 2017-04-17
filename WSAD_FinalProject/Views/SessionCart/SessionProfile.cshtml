@@ -1,0 +1,81 @@
+﻿@model WSAD_FinalProject.Models.ViewModels.SessionCart.SessionCartProfileViewModel
+
+@{
+    ViewBag.Title = "SessionProfile";
+}
+
+<h2>Session Profile</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+      
+        <dt>
+            Title
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionTitle)
+        </dd>
+
+        <dt>
+            Description
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionDescription)
+        </dd>
+
+        <dt>
+            Presenter
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionPresenter)
+        </dd>
+
+        <dt>
+            Address
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionAddress)
+        </dd>
+
+        <dt>
+            Room
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionRoom)
+        </dd>
+
+        <dt>
+            Seats
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionSeatsAvailable)
+        </dd>
+
+        <dt>
+            Date Created
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionDateCreated)
+        </dd>
+
+        <dt>
+            Last Modified
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionDateModified)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <button type="button" name="Admin" class="btn btn-default">@Html.ActionLink("My Sessions", "Index", "SessionCart")</button>
+</p>

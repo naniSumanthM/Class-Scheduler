@@ -1,0 +1,118 @@
+﻿@model List<WSAD_FinalProject.Areas.Admin.Models.ViewModels.ManageSession.UsersEnrolledBySessionViewModel>
+
+
+@{
+    ViewBag.Title = "getEnrolledUsers";
+}
+
+<h2>User Enrollments</h2>
+@if (TempData["UsersRemoved"] != null)
+{
+    <div class="alert alert-warning">
+        <span class="glyphicon glyphicon-warning-sign">
+            @TempData["UsersRemoved"]
+        </span>
+    </div>
+}
+
+
+@if (TempData["NoDuplicates"] != null)
+{
+    <div class="alert alert-warning">
+        <span class="glyphicon glyphicon-warning-sign">
+            @TempData["UsersRemoved"]
+        </span>
+    </div>
+}
+
+
+@*get the name of the session*@
+
+@*Textbox for adding user to a session*@
+<div>
+    <label>Add Users to Session: </label>
+    @Html.TextBox("UserSearch", null, new { placeholder = "Enter User To Search", @class = "form-control" })
+</div>
+
+<br />
+
+
+@if (@Model.Count == 0)
+{
+    <h3>Looks like NO-1 is Interested?</h3>
+    <button type="button" name="Admin" class="btn btn-default">@Html.ActionLink("Back to Sessions", "Index")</button>
+}
+else
+{
+    using (Html.BeginForm("DeleteUsersFromSession", "ManageSessions"))
+    {
+        <div id="checkboxes">
+            <table class="table">
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email Address</th>
+                    <th>Company</th>
+                </tr>
+
+                @for (int i = 0; i < Model.Count; i++)
+                {
+
+                    var item = Model[i];
+
+                    <tr>
+                        <td>
+                            @Html.HiddenFor(x => Model[i].User.UserId)
+                            @Html.CheckBoxFor(x => Model[i].isSelected)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.UserFirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.UserLastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.UserEmailAddress)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.UserCompnay)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <button type="submit" class="btn btn-danger" id="postBack">Remove From Cart</button>
+        <button type="button" name="Admin" class="btn btn-default">@Html.ActionLink("Back to Sessions", "Index")</button>
+        <button id="uncheck" type="button" class="btn btn-info">Reset</button>
+    }
+
+}
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryui")
+
+
+    <script>
+        $(function () {
+            $("#UserSearch").autocomplete({
+                source: "@(Url.Content("~/api/UserSearch"))",
+                minLength: 1,
+                select: function (event, ui) {
+                    var userId = ui.item.UserId; //Property should match the data from the api
+                    window.alert(userId);
+                    //Mix of Razor and Javascript
+                    window.location = "@(Url.Action("AddUserToSession", new { Model.FirstOrDefault()?.SessionId }))" + "&userId=" + userId;
+                }
+            })
+            .autocomplete("instance")._renderItem = function (ul, item) {
+                return $("<li>")
+                  .append("<a>" + item.UserFirstName + "<small> $" +" "+ item.UserLastName + " <small></a>")
+                  .appendTo(ul);
+            };
+        });
+    </script>
+  
+    <script src="@Url.Content("~/Scripts/script.js")"></script>
+}

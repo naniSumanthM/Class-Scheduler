@@ -1,0 +1,86 @@
+﻿@model WSAD_FinalProject.Areas.Admin.Models.ViewModels.ManageSession.SessionProfileViewModel
+
+@{
+    ViewBag.Title = "SessionProfile";
+}
+
+<h2>Session Profile: @Model.SessionTitle</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.LabelFor(model => model.SessionTitle, "Title")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionTitle)
+        </dd>
+
+        <dt>            
+            @Html.LabelFor(model=> model.SessionDescription, "Description")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionDescription)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model=> model.SessionPresenter, "Presenter")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionPresenter)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.SessionAddress, "Address")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionAddress)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.SessionRoom, "Room")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionRoom)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.SessionSeatsAvailable, "Seats")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionSeatsAvailable)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.SessionDateCreated, "Date Created")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionDateCreated)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.SessionDateModified, "Date Modified")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionDateModified)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <button type="button" name="Admin" class="btn btn-default">
+            @Html.ActionLink("Back to Sessions", "Index")
+        </button>
+    }
+</div>

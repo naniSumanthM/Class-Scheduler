@@ -1,0 +1,57 @@
+﻿@model List<WSAD_FinalProject.Areas.Admin.Models.ViewModels.ManageUser.SessionsEnrolledByUserViewModel>
+@{
+    ViewBag.Title = "GetEnrolledSessions";
+}
+<h2>User Enrolled Sessions @</h2>
+
+@if (Model.Count > 0)
+{
+    <table class="table">
+        <tr>
+            <th>Session Id</th>
+            <th>Session Title</th>
+            <th>Session Presenter</th>
+            <th>Session Description</th>
+        </tr>
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            var item = Model[i];
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Session.SessionId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Session.SessionTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Session.SessionPresenter)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Session.SessionDescription)
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div>
+        <button type="button" name="Admin" class="btn btn-default">
+            @Html.ActionLink("Back To Users", "Index")
+        </button>
+    </div>
+
+}
+else
+{
+    <h3>Looks like this user is not enrolled in Anything?</h3>
+    <div>
+        <button type="button" name="Admin" class="btn btn-default">
+            @Html.ActionLink("Back To Users", "Index")
+        </button>
+    </div>
+
+}
+
+
+
+    

@@ -1,0 +1,93 @@
+﻿@model WSAD_FinalProject.Areas.Admin.Models.ViewModels.ManageUser.UserProfileAdminViewModel
+
+@{
+    ViewBag.Title = "UserProfile";
+}
+
+<h2>User Profile: @Model.UserFirstName @Model.UserLastName</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            User Id
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
+        <dt>
+            First Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserFirstName)
+        </dd>
+
+        <dt>
+            Last Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserLastName)
+        </dd>
+
+        <dt>
+            Email Address
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserEmailAddress)
+        </dd>
+
+        <dt>
+            Company
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserCompany)
+        </dd>
+
+        <dt>
+            Active Status
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserIsActive)
+        </dd>
+
+        <dt>
+            Administrator Status
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserIsAdmin)
+        </dd>
+
+        <dt>
+            Date Created
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserDateCreated)
+        </dd>
+
+        <dt>
+            Date Modified
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserDateModified)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    <button type="button" name="Admin" class="btn btn-default">
+        @Html.ActionLink(String.Concat("Edit User: ", Model.UserFirstName), "EditUser", new { id = Model.UserId})
+    </button> 
+    <button type="button" name="Admin" class="btn btn-default">
+        @Html.ActionLink("Back To Users", "Index")
+    </button>
+</div>
