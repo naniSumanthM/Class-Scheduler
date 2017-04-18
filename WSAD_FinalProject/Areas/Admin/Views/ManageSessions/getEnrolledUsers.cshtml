@@ -1,4 +1,4 @@
-﻿@model List<WSAD_FinalProject.Areas.Admin.Models.ViewModels.ManageSession.UsersEnrolledBySessionViewModel>
+﻿@model WSAD_FinalProject.Areas.Admin.Models.ViewModels.ManageSession.UsersEnrolledBySessionViewModel
 
 
 @{
@@ -37,7 +37,7 @@
 <br />
 
 
-@if (@Model.Count == 0)
+@if (@Model.Enrollments.Count == 0)
 {
     <h3>Looks like NO-1 is Interested?</h3>
     <button type="button" name="Admin" class="btn btn-default">@Html.ActionLink("Back to Sessions", "Index")</button>
@@ -46,6 +46,7 @@ else
 {
     using (Html.BeginForm("DeleteUsersFromSession", "ManageSessions"))
     {
+        @Html.HiddenFor(x=>x.SessionId)
         <div id="checkboxes">
             <table class="table">
                 <tr>
@@ -56,15 +57,15 @@ else
                     <th>Company</th>
                 </tr>
 
-                @for (int i = 0; i < Model.Count; i++)
+                @for (int i = 0; i < Model.Enrollments.Count; i++)
                 {
 
-                    var item = Model[i];
+                    var item = Model.Enrollments[i];
 
                     <tr>
                         <td>
-                            @Html.HiddenFor(x => Model[i].User.UserId)
-                            @Html.CheckBoxFor(x => Model[i].isSelected)
+                            @Html.HiddenFor(x => Model.Enrollments[i].User.UserId)
+                            @Html.CheckBoxFor(x => Model.Enrollments[i].isSelected)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.User.UserFirstName)
@@ -101,14 +102,13 @@ else
                 minLength: 1,
                 select: function (event, ui) {
                     var userId = ui.item.UserId; //Property should match the data from the api
-                    window.alert(userId);
                     //Mix of Razor and Javascript
-                    window.location = "@(Url.Action("AddUserToSession", new { Model.FirstOrDefault()?.SessionId }))" + "&userId=" + userId;
+                    window.location = "@(Url.Action("AddUserToSession", new { sessionId = Model.SessionId }))" + "&userId=" + userId;
                 }
             })
             .autocomplete("instance")._renderItem = function (ul, item) {
                 return $("<li>")
-                  .append("<a>" + item.UserFirstName + "<small> $" +" "+ item.UserLastName + " <small></a>")
+                  .append("<a>" + item.UserFirstName  +" "+ item.UserLastName + "</a>")
                   .appendTo(ul);
             };
         });

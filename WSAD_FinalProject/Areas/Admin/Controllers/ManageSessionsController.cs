@@ -277,7 +277,7 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
 
             //id == sessionID
             string sessionId = Session.SessionID;
-            List<UsersEnrolledBySessionViewModel> enrollmentList;
+            UsersEnrolledBySessionViewModel userSessionViewModel;
 
             using (WSADDbContext context = new WSADDbContext())
             {
@@ -304,12 +304,14 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
                 sessionID = sessionDTO.SessionId;
 
                 //Get enrollment users
-                enrollmentList = context.SessionCartItems.Where(x => x.SessionId == sessionID)
-                    .ToArray()
-                    .Select(x => new UsersEnrolledBySessionViewModel(x))
-                    .ToList();
+
+                userSessionViewModel = new UsersEnrolledBySessionViewModel(
+                    sessionID,
+                    context.SessionCartItems.Where(x => x.SessionId == sessionID)
+                );
+
             }
-            return View(enrollmentList);
+            return View(userSessionViewModel);
         }
 
         /// <summary>
@@ -318,17 +320,17 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
         /// <param name="collectionOfUsersToDeleteFromSession"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult DeleteUsersFromSession(List<UsersEnrolledBySessionViewModel> collectionOfUsersToDeleteFromSession)
+        public ActionResult DeleteUsersFromSession(UsersEnrolledBySessionViewModel userEnrolledVM)
         {
-            IEnumerable<UsersEnrolledBySessionViewModel> filteredCollectionsOfUsersToDelete = collectionOfUsersToDeleteFromSession.Where(x => x.isSelected == true);
+            var filteredCollectionsOfUsersToDelete = userEnrolledVM.Enrollments.Where(x => x.isSelected == true);
             bool usersDeleted = false;
 
             using (WSADDbContext context = new WSADDbContext())
             {
                 foreach (var userItems in filteredCollectionsOfUsersToDelete)
                 {
-                    SessionCart dtoToDelete = context.SessionCartItems.FirstOrDefault(row => row.UserId == userItems.User.UserId);
-                    
+                    SessionCart dtoToDelete = context.SessionCartItems.FirstOrDefault(row => row.UserId == userItems.User.UserId && row.SessionId == userEnrolledVM.SessionId);
+
                     if (dtoToDelete != null)
                     {
                         context.SessionCartItems.Remove(dtoToDelete);
@@ -338,7 +340,7 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
                 context.SaveChanges();
             }
 
-            //TODO: Stay on same view
+            //TODO: Stay on same view, instead of being kicked back to the index
             if (usersDeleted)
             {
                 TempData["UsersRemoved"] = "Users Removed!";
@@ -354,12 +356,11 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
         /// <param name="sessionId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        [HttpPost]
         public ActionResult AddUserToSession(int sessionId, int userId)
         {
             bool userAdded = false;
             //Check for valid session and user id's
-            if (sessionId <= 0 || userId <=0)
+            if (sessionId <= 0 || userId <= 0)
             {
                 return this.HttpNotFound("Invalid Input Parameters");
             }
@@ -370,7 +371,7 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
                 Session sessionDTO = context.Sessions.FirstOrDefault(x => x.SessionId == sessionId);
                 User userDTO = context.Users.FirstOrDefault(x => x.UserId == userId);
 
-                if (sessionDTO == null || userDTO ==null)
+                if (sessionDTO == null || userDTO == null)
                 {
                     return this.HttpNotFound("Invalid Input Parameters");
                 }
@@ -378,10 +379,8 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
                 //Check to see if the user+session Combination already exists, if not add it
 
                 SessionCart sessionCartDto =
-                    context.SessionCartItems.FirstOrDefault(
-                        row => row.UserId == userDTO.UserId && sessionDTO.SessionId == sessionId);
-               
-                //sessionCart DTO == null -> then add since the combination does not exist
+                    context.SessionCartItems.FirstOrDefault(row => sessionDTO.SessionId == sessionId && row.UserId == userDTO.UserId);
+
 
                 if (sessionCartDto == null)
                 {
@@ -390,18 +389,21 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
                         UserId = userId,
                         SessionId = sessionId
                     };
-
                     context.SessionCartItems.Add(sessionCartItemToAdd);
                     userAdded = true;
+
                 }
-                else
-                {
-                    //if (!userAdded)
-                    //{
-                    //    TempData["NoDuplicates"] = "User Already Registered to this session";
-                    //    return RedirectToAction("GetEnrolledUsers", new { sessionId });
-                    //}
-                }
+                #region MyRegion
+                //}
+                //else
+                //{
+                //    //if (!userAdded)
+                //    //{
+                //    //    TempData["NoDuplicates"] = "User Already Registered to this session";
+                //    //    return RedirectToAction("GetEnrolledUsers", new { sessionId });
+                //    //}
+                //} 
+                #endregion
                 context.SaveChanges();
             }
 
