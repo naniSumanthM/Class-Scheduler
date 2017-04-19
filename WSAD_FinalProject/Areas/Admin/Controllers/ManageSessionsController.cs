@@ -382,8 +382,8 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
                     context.SessionCartItems.FirstOrDefault(row => sessionDTO.SessionId == sessionId && row.UserId == userDTO.UserId);
 
 
-                if (sessionCartDto == null)
-                {
+                //if (sessionCartDto == null)
+                //{
                     SessionCart sessionCartItemToAdd = new SessionCart()
                     {
                         UserId = userId,
@@ -392,7 +392,7 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
                     context.SessionCartItems.Add(sessionCartItemToAdd);
                     userAdded = true;
 
-                }
+                //}
                 #region MyRegion
                 //}
                 //else

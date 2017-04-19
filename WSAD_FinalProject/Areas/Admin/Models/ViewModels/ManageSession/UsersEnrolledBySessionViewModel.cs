@@ -26,24 +26,24 @@ namespace WSAD_FinalProject.Areas.Admin.Models.ViewModels.ManageSession
         public List<UserEnrollmentViewModel> Enrollments { get; set; }
     }
 
-    public class UserEnrollmentViewModel
-    {
-        public UserEnrollmentViewModel()
-        {
+    //public class UserEnrollmentViewModel
+    //{
+    //    public UserEnrollmentViewModel()
+    //    {
                 
-        }
-        public UserEnrollmentViewModel(SessionCart row)
-        {
-            this.SessionCartId = row.SessionCartId;
-            this.UserId = row.UserId;
-            this.User = new UserViewModel(row.Customer);
-        }
+    //    }
+    //    public UserEnrollmentViewModel(SessionCart row)
+    //    {
+    //        this.SessionCartId = row.SessionCartId;
+    //        this.UserId = row.UserId;
+    //        this.User = new UserViewModel(row.Customer);
+    //    }
 
-        public int SessionCartId { get; set; }
-        public int UserId { get; set; }
-        public UserViewModel User { get; set; }
-        public bool isSelected { get; set; }
+    //    public int SessionCartId { get; set; }
+    //    public int UserId { get; set; }
+    //    public UserViewModel User { get; set; }
+    //    public bool isSelected { get; set; }
 
-    }
+    //}
 
 }
