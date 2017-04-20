@@ -340,14 +340,14 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
                 context.SaveChanges();
             }
 
-            //TODO: Stay on same view, instead of being kicked back to the index
             if (usersDeleted)
             {
                 TempData["UsersRemoved"] = "Users Removed!";
-                return RedirectToAction("Index");
+                return RedirectToAction("GetEnrolledUsers", new {Id = userEnrolledVM.SessionId});
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("GetEnrolledUsers", new { Id = userEnrolledVM.SessionId });
+
         }
 
         /// <summary>
@@ -367,7 +367,6 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
 
             using (WSADDbContext context = new WSADDbContext())
             {
-
                 Session sessionDTO = context.Sessions.FirstOrDefault(x => x.SessionId == sessionId);
                 User userDTO = context.Users.FirstOrDefault(x => x.UserId == userId);
 
@@ -377,7 +376,6 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
                 }
 
                 //Check to see if the user+session Combination already exists, if not add it
-
                 SessionCart sessionCartDto =
                     context.SessionCartItems.FirstOrDefault(row => sessionDTO.SessionId == sessionId && row.UserId == userDTO.UserId);
 
@@ -407,8 +405,7 @@ namespace WSAD_FinalProject.Areas.Admin.Controllers
                 context.SaveChanges();
             }
 
-            //return RedirectToAction("GetEnrolledUsers", new {sessionId});
-            return RedirectToAction("Index");
+            return RedirectToAction("GetEnrolledUsers", new { Id = sessionId });
         }
     }
 }

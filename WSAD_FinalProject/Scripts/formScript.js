@@ -8,3 +8,5 @@ $('input:not([type=image])').keyup(function () {
     });
     $('#button').prop('disabled', disable);
 });
+
+//Ditry way - can do better by identifying specific properties

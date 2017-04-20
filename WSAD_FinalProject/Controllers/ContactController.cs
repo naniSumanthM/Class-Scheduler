@@ -75,7 +75,8 @@ namespace WSAD_FinalProject.Controllers
                 };
 
                 newContactDto = context.Contacts.Add(newContactDto);
-
+                
+                /*
                 if (newContact.ContactReason.Equals("Request Admin Account"))
                 {
                     //send email to the user saying account access granted
@@ -92,6 +93,7 @@ namespace WSAD_FinalProject.Controllers
                     //general inquiry
                     
                 }
+                */
 
             
                 try
